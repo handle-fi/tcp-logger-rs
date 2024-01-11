@@ -1,7 +1,12 @@
 [package]
-name = "tcp-logger-rs"
+name = "tcp_env_logger"
 version = "1.0.0"
 edition = "2021"
+license = "BSL-1"
+homepage = "https://github.com/handle-fi/tcp_env_logger"
+repository = "https://github.com/handle-fi/tcp_env_logger"
+description = "TCP logger built on top of env_logger"
+readme = "README.md"
 
 [dependencies]
 log = "0.4.*"
