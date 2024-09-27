@@ -16,7 +16,9 @@ pub struct EnvTcpLogger {
 #[derive(Serialize)]
 struct SocketMessage {
     hostname: String,
+    level: String,
     message: String,
+    module: String,
 }
 
 impl EnvTcpLogger {
@@ -49,13 +51,14 @@ impl Log for EnvTcpLogger {
         if !self.enabled(record.metadata()) {
             return;
         }
-        let level = record.level();
         // Forward the log to env_logger.
         self.env_logger.log(record);
         // Forward the log to TCP socket.
         let serialization_result = serde_json::to_string(&SocketMessage {
             hostname: self.hostname.clone(),
-            message: format!("[{}] {}", level, record.args()),
+            level: record.level().to_string(),
+            message: record.args().to_string(),
+            module: record.target().to_string()
         });
         let message = match serialization_result {
             Ok(message) => message,
